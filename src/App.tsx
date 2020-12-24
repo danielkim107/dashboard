@@ -1,8 +1,10 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Dashboard from './components/Dashboard';
 
 function App() {
   return (
-    <h1>Hi</h1>
+    <Dashboard/>
   );
 }
 
