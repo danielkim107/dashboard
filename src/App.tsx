@@ -1,10 +1,10 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Dashboard from './components/Dashboard';
+import Routes from './Routes';
 
 function App() {
   return (
-    <Dashboard/>
+    <Routes/>
   );
 }
 
