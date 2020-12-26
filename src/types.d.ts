@@ -1,8 +1,15 @@
-interface Entry {
+type Entry = {
 	id: number,
-	title: string,
 	author: string,
+	title: string,
+	content: string,
 	createdAt: string
+};
+
+type EntryForm = {
+	author: string,
+	title: string,
+	content: string
 };
 
 interface Param {
