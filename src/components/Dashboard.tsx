@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 const Dashboard = () => {
 	const history = useHistory();
-	const entryList: Array<Entry> = [
-		{id: 1, title: '첫번째 포스팅', author: '김정수', createdAt: '2020-12-24 21:00:00'},
-		{id: 2, title: '두번째 포스팅', author: '김형우', createdAt: '2020-12-24 22:00:00'}
-	];
+	const [ entryList, setEntryList ] = useState<Array<Entry>>();
 
-	const handleRowClick = (entry: Entry) => {
-		history.push(`/${entry.id}`);
+	useEffect(() => {
+		fetch('http://localhost:4000/entry', {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(response => {
+			return response.json();
+		}).then(result => {
+			setEntryList(result);
+		})
+	}, []);
+
+	const handleRowClick = (id: number) => {
+		history.push(`/${id}`);
 	};
 
 	const createEntry = () => {
@@ -18,7 +29,10 @@ const Dashboard = () => {
 	}
 	return (
 		<div className="container">
-			<h1>계시판</h1>
+			<h1>나의 심플한 계시판</h1>
+			<div className="row">
+				<Button onClick={() => createEntry()}>신규 계시물</Button>
+			</div>
 			<Table striped bordered hover>
 				<thead>
 					<tr>
@@ -29,9 +43,9 @@ const Dashboard = () => {
 					</tr>
 				</thead>
 				<tbody>
-					{entryList.map((entry) => {
+					{entryList?.map((entry) => {
 						return (
-							<tr key={entry.id} onClick={() => handleRowClick(entry)}>
+							<tr key={entry.id} onClick={() => handleRowClick(entry.id)}>
 								<td>{entry.id}</td>
 								<td>{entry.title}</td>
 								<td>{entry.author}</td>
@@ -40,7 +54,6 @@ const Dashboard = () => {
 					)})}
 				</tbody>
 			</Table>
-			<Button onClick={() => createEntry()}>신규 계시물</Button>
 		</div>
 	);
 }
