@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
@@ -7,8 +7,20 @@ const EntryForm = () => {
 	const history = useHistory();
 	const params: Param  = useParams();
 	const { register, handleSubmit, errors, reset } = useForm<EntryForm>();
+	const [ userList, setUserList ] = useState<Array<User>>([]);
 
 	useEffect(() => {
+		fetch('http://localhost:4000/user', {
+			method: 'GET',
+			mode: 'cors',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(response => {
+			return response.json();
+		}).then(result => {
+			setUserList(result)
+		})
 		if (params && params.id !== 'newEntry') {
 			fetch(`http://localhost:4000/entry/${params.id}`, {
 				method: 'GET',
@@ -73,12 +85,18 @@ const EntryForm = () => {
 	return (
 		<div className="container">
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<Form.Group controlId="author">
+				<Form.Group controlId="userId">
 					<Form.Label>Author</Form.Label>
-					<Form.Control type="text" placeholder="Author" name="author" maxLength={50} ref={register({required: true})}/>
-					{errors.author && errors.author.type === "required" && (
+					<Form.Control as="select" type="number" placeholder="Author" name="userId" custom ref={register({required: true})}>
+						{
+							userList.map((user) => {
+								return (<option key={user.id} value={user.id}>{user.username}</option>)
+							})
+						}
+					</Form.Control>
+					{errors.userId && errors.userId.type === "required" && (
 						<Form.Text className="text-danger">
-							You must enter the author's name.
+							You must choose an author.
 						</Form.Text>
         			)}
 				</Form.Group>
@@ -103,8 +121,8 @@ const EntryForm = () => {
 				<Button variant="primary" type="submit">
 					Submit
 				</Button>
+				{params.id !== 'newEntry' && (<Button variant="danger" className="delete-button" onClick={() => deleteEntry(params.id)}>Delete</Button>)}
 			</Form>
-			{params.id && (<Button variant="danger" onClick={() => deleteEntry(params.id)}>Delete</Button>)}
 		</div>
 	);
 }

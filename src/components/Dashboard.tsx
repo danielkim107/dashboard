@@ -21,16 +21,22 @@ const Dashboard = () => {
 	}, []);
 
 	const handleRowClick = (id: number) => {
-		history.push(`/${id}`);
+		history.push(`/entry/${id}`);
 	};
 
 	const createEntry = () => {
-		history.push('/newEntry');
-	}
+		history.push('/entry/newEntry');
+	};
+
+	const createUser = () => {
+		history.push('/user/newUser')
+	};
+
 	return (
 		<div className="container">
 			<h1>나의 심플한 계시판</h1>
 			<div className="row">
+				<Button onClick={() => createUser()}>신규 유저</Button>
 				<Button onClick={() => createEntry()}>신규 계시물</Button>
 			</div>
 			<Table striped bordered hover>
@@ -48,7 +54,7 @@ const Dashboard = () => {
 							<tr key={entry.id} onClick={() => handleRowClick(entry.id)}>
 								<td>{entry.id}</td>
 								<td>{entry.title}</td>
-								<td>{entry.author}</td>
+								<td>{entry.user.username}</td>
 								<td>{entry.createdAt}</td>
 							</tr>
 					)})}
