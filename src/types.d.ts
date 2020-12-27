@@ -1,15 +1,25 @@
 type Entry = {
 	id: number,
-	author: string,
+	user: User,
 	title: string,
 	content: string,
 	createdAt: string
 };
 
+type User = {
+	id: number,
+	username: string
+}
+
 type EntryForm = {
-	author: string,
+	userId: number,
 	title: string,
 	content: string
+};
+
+type UserForm = {
+	username: string,
+	password: string
 };
 
 interface Param {
