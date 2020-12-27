@@ -1,4 +1,12 @@
+.delete-button {
+	margin-left: 5px;
+}
+
 .row {
 	margin: 15px 0;
 	float: right;
+}
+
+.row > * {
+	margin: 5px;
 }
