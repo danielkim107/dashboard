@@ -1,13 +1,14 @@
 import React from 'react';
-import * as Cookies from 'js-cookie';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import { AuthService } from '../utils/AuthService';
 
 const LoginForm = () => {
 
 	const { register, handleSubmit } = useForm<UserForm>();
 	const history = useHistory();
+	const authService = new AuthService();
 
 	const onSubmit = (data: UserForm) => {
 		fetch(`http://localhost:4000/auth`, {
@@ -21,14 +22,16 @@ const LoginForm = () => {
 				if (response.status === 200) {
 					return response.json();
 				} else {
-					alert('Incorrect username and/or password.');
+					return alert('Incorrect username and/or password.');
 				}
 			}).then((result) => {
-				Cookies.set('user', result.user);
-				Cookies.set('loggedIn', 'true');
-				history.push('/');
+				if (result) {
+					authService.login(result.user);
+					history.push('/dashboard');
+				}
 			})
 	};
+
 	return (
 		<div className="container">
 			<div className="login-box">
@@ -41,9 +44,10 @@ const LoginForm = () => {
 						<Form.Label>Password</Form.Label>
 						<Form.Control type="text" placeholder="Password" name="password" maxLength={50} ref={register}/>
 					</Form.Group>
-					<Button variant="primary" type="submit">
-						Submit
-					</Button>
+					<div className="right-align">
+						<Button type="submit" className="submit-button" style={{float: 'right'}}>Submit</Button>
+						<Button onClick={() => history.push('/user/newUser')} style={{float: 'left'}}>신규 유저</Button>
+					</div>
 				</Form>
 			</div>
 		</div>
