@@ -2,6 +2,17 @@
 	margin-left: 5px;
 }
 
+.login-box {
+	position: relative;
+	background: lightgrey;
+	height: 300px;
+	width: 60%;
+	margin: 0 auto;
+	padding: 20px;
+	resize: both;
+	overflow: auto;
+}
+
 .row {
 	margin: 15px 0;
 	float: right;
