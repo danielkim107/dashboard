@@ -19,7 +19,11 @@ const Dashboard = () => {
 			}).then(response => {
 				return response.json();
 			}).then(result => {
-				setEntryList(result);
+				let data = result.map((result: Entry) => {
+					result.createdAt = new Date(result.createdAt).toLocaleDateString();
+					return result;
+				})
+				setEntryList(data);
 			})
 		} else {
 			alert('로그인이 되어 있지 않습니다. 로그인 해주세요.');
