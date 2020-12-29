@@ -13,6 +13,10 @@
 	overflow: auto;
 }
 
+.right-align {
+	text-align: right;
+}
+
 .row {
 	margin: 15px 0;
 	float: right;
@@ -20,4 +24,13 @@
 
 .row > * {
 	margin: 5px;
+}
+
+.submit-button {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 6px 12px;
+	border-radius: 5px;
+	cursor: pointer;
 }
