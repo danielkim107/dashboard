@@ -12,7 +12,6 @@ type User = {
 }
 
 type EntryForm = {
-	userId: number,
 	title: string,
 	content: string
 };
