@@ -34,15 +34,15 @@ const LoginForm = () => {
 
 	return (
 		<div className="container">
-			<div className="login-box">
+			<div className="registration-box">
 				<Form onSubmit={handleSubmit(onSubmit)}>
 					<Form.Group controlId="author">
-						<Form.Label>Username</Form.Label>
-						<Form.Control type="text" placeholder="Username" name="username" maxLength={50} ref={register}/>
+						<Form.Label>아이디</Form.Label>
+						<Form.Control type="text" placeholder="아이디를 입력하세요" name="username" maxLength={50} ref={register}/>
 					</Form.Group>
 					<Form.Group controlId="password">
-						<Form.Label>Password</Form.Label>
-						<Form.Control type="text" placeholder="Password" name="password" maxLength={50} ref={register}/>
+						<Form.Label>비밀번호</Form.Label>
+						<Form.Control type="password" placeholder="비밀번호를 입력하세요" name="password" maxLength={50} ref={register}/>
 					</Form.Group>
 					<div className="right-align">
 						<Button type="submit" className="submit-button" style={{float: 'right'}}>Submit</Button>
