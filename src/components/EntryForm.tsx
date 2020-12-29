@@ -79,7 +79,7 @@ const EntryForm = () => {
 		<div className="container">
 			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Form.Group controlId="title">
-					<Form.Label>Title</Form.Label>
+					<Form.Label>제목</Form.Label>
 					<Form.Control type="text" placeholder="제목" name="title" maxLength={50} ref={register({required: true})} readOnly={checkUser()}/>
 					{errors.title && errors.title.type === "required" && (
 						<Form.Text className="text-danger">
@@ -88,7 +88,7 @@ const EntryForm = () => {
         			)}
 				</Form.Group>
 				<Form.Group controlId="content">
-					<Form.Label>Content</Form.Label>
+					<Form.Label>내용</Form.Label>
 					<Form.Control type="text" as="textarea" rows={6} placeholder="내용" name="content" maxLength={500} ref={register({required: true})} readOnly={checkUser()}/>
 					{errors.content && errors.content.type === "required" && (
 						<Form.Text className="text-danger">
