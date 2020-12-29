@@ -2,6 +2,11 @@
 	margin-left: 5px;
 }
 
+.pagination {
+	width: 50%;
+	margin: 0 auto;
+}
+
 .registration-box {
 	position: relative;
 	background: lightgrey;
