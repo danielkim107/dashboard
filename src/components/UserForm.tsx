@@ -27,7 +27,7 @@ const UserForm = () => {
 				alert('실패');
 			}
 		}).finally(() => {
-			history.push('/');
+			history.push('/dashboard');
 		});
 	};
 
@@ -38,7 +38,7 @@ const UserForm = () => {
 		}).then(response => {
 			if (response.ok && response.status === 204) {
 				alert('삭제 완료');
-				history.push('/');
+				history.push('/dashboard');
 			} else {
 				alert('삭제 실패');
 			}
