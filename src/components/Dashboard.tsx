@@ -1,43 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { AuthService } from '../utils/AuthService';
 
 const Dashboard = () => {
 	const history = useHistory();
 	const [ entryList, setEntryList ] = useState<Array<Entry>>();
+	const authService = new AuthService();
 
 	useEffect(() => {
-		fetch('http://localhost:4000/entry', {
-			method: 'GET',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		}).then(response => {
-			return response.json();
-		}).then(result => {
-			setEntryList(result);
-		})
+		if (authService.checkLogin()) {
+			fetch('http://localhost:4000/entry', {
+				method: 'GET',
+				mode: 'cors',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => {
+				return response.json();
+			}).then(result => {
+				setEntryList(result);
+			})
+		} else {
+			alert('로그인이 되어 있지 않습니다. 로그인 해주세요.');
+			history.push('/login');
+		}
 	}, []);
 
-	const handleRowClick = (id: number) => {
-		history.push(`/entry/${id}`);
-	};
-
-	const createEntry = () => {
-		history.push('/entry/newEntry');
-	};
-
-	const createUser = () => {
-		history.push('/user/newUser')
+	const handleLogOut = () => {
+		authService.logout();
+		history.push('/login');
 	};
 
 	return (
 		<div className="container">
 			<h1>나의 심플한 계시판</h1>
 			<div className="row">
-				<Button onClick={() => createUser()}>신규 유저</Button>
-				<Button onClick={() => createEntry()}>신규 계시물</Button>
+				<Button onClick={() => history.push('/entry/newEntry')}>신규 계시물</Button>
 			</div>
 			<Table striped bordered hover>
 				<thead>
@@ -51,7 +50,7 @@ const Dashboard = () => {
 				<tbody>
 					{entryList?.map((entry) => {
 						return (
-							<tr key={entry.id} onClick={() => handleRowClick(entry.id)}>
+							<tr key={entry.id} onClick={() => history.push(`/entry/${entry.id}`)}>
 								<td>{entry.id}</td>
 								<td>{entry.title}</td>
 								<td>{entry.user.username}</td>
@@ -60,6 +59,7 @@ const Dashboard = () => {
 					)})}
 				</tbody>
 			</Table>
+			<Button onClick={() => handleLogOut()}>Logout</Button>
 		</div>
 	);
 }
