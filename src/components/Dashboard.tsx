@@ -6,13 +6,22 @@ import { AuthService } from '../utils/AuthService';
 const Dashboard = () => {
 	const history = useHistory();
 	const [ entryList, setEntryList ] = useState<Array<Entry>>();
-	const [ limit, setLimit ] = useState(15);
+	const [ limit, setLimit ] = useState(25);
 	const [ dataCount, setDataCount ] = useState(0);
 	const [ page, setPage ] = useState(1);
 	const [ totalPages, setTotalPages ] = useState(1);
 	const [ paginationTab, setPaginationTab ] = useState<Array<any>>([]);
+	const paginationCount = [10, 25, 50, 100];
 	const authService = new AuthService();
 
+	useEffect(() => {
+		if (authService.checkLogin()) {
+			reload();
+		} else {
+			alert('로그인이 되어 있지 않습니다. 로그인 해주세요.');
+			history.push('/login');
+		}
+	}, []);
 
 	useEffect(createPagination, [entryList]);
 
@@ -39,22 +48,14 @@ const Dashboard = () => {
 			})
 	}
 
-	useEffect(() => {
-		if (authService.checkLogin()) {
-			reload();
-		} else {
-			alert('로그인이 되어 있지 않습니다. 로그인 해주세요.');
-			history.push('/login');
-		}
-	}, []);
-
-	const handleLogOut = () => {
+	function handleLogOut() {
 		authService.logout();
 		history.push('/login');
 	};
 
-	function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+	function handlePageCountChange(e: React.ChangeEvent<HTMLSelectElement>) {
 		setLimit(parseInt(e.target.value));
+		setPage(1);
 	};
 
 	function createPagination() {
@@ -99,9 +100,14 @@ const Dashboard = () => {
 				<Pagination>{paginationTab}</Pagination>
 			</div>
 			<div className="row">
-				<h6> Page Count </h6>
-				<input type="number" value={limit} onChange={handleChange}/>
-				<Button variant="primary" onClick={() => setPage(1)}>업데이트</Button>
+				<label htmlFor="pageCount">페이지 갯수</label>
+				<select id="pageCount" className="page-count" value={limit} onChange={e => handlePageCountChange(e)}>
+					{
+						paginationCount.map(num => {
+							return (<option key={num} value={num}>{num}</option>)
+						})
+					}
+				</select>
 			</div>
 		</div>
 	);
