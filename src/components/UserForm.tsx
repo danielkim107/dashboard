@@ -1,11 +1,10 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const UserForm = () => {
 	const history = useHistory();
-	const params: Param  = useParams();
 	const { register, handleSubmit, errors } = useForm<UserForm>();
 
 	const onSubmit = (data: UserForm) => {
