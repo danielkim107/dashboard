@@ -2,9 +2,19 @@
 	margin-left: 5px;
 }
 
+.page-limit {
+	border-radius: 0.25rem;
+	width: 100px;
+}
+
+.page-item {
+	width: auto;
+}
+
 .pagination {
-	width: 50%;
+	width: auto;
 	margin: 0 auto;
+	justify-content: center;
 }
 
 .registration-box {
