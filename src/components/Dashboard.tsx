@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Pagination, Table } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import { GetEntryQuery } from '../api/api';
 import { AuthService } from '../utils/AuthService';
 
 const Dashboard = () => {
 	const history = useHistory();
+	const query = new URLSearchParams(useLocation().search);
 	const [ entryList, setEntryList ] = useState<Array<Entry>>();
 	const [ limit, setLimit ] = useState(25);
-	const [ dataCount, setDataCount ] = useState(0);
 	const [ page, setPage ] = useState(1);
 	const [ totalPages, setTotalPages ] = useState(1);
 	const [ paginationTab, setPaginationTab ] = useState<Array<any>>([]);
@@ -16,37 +17,40 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		if (authService.checkLogin()) {
-			reload();
+			const asyncFunction = async() => {
+				await reload();
+			};
+			asyncFunction();
 		} else {
 			alert('로그인이 되어 있지 않습니다. 로그인 해주세요.');
 			history.push('/login');
 		}
 	}, []);
 
+	useEffect(() => {
+		const asyncFunction = async() => {
+			await buildQuery();
+		};
+		asyncFunction();
+	}, [page, limit]);
+
 	useEffect(createPagination, [entryList]);
 
-	useEffect(reload, [page]);
+	async function buildQuery() {
+		const url = `/dashboard?page=${page}&limit=${limit}`;
+		history.push(url);
+		const entries = await GetEntryQuery({page, limit});
+		setTotalPages(Math.ceil(entries.count) / limit);
+		setEntryList(entries.data);
+	};
 
-	function reload() {
-		fetch(`http://localhost:4000/entry?limit=${limit}&page=${page}`, {
-			method: 'GET',
-			mode: 'cors',
-			headers: {
-				'Content-Type': 'application/json'
-			}
-			}).then(response => {
-				return response.json();
-			}).then(result => {
-				let data = result.data.map((result: Entry) => {
-					result.createdAt = new Date(result.createdAt).toLocaleDateString();
-					return result;
-				})
-				setTotalPages(result.pages);
-				setEntryList(data);
-				setDataCount(result.count);
-				setPage(parseInt(result.page));
-			})
-	}
+
+
+	async function reload() {
+		const entries = await GetEntryQuery({page, limit});
+		setTotalPages(Math.ceil(entries.count) / limit);
+		setEntryList(entries.data);
+	};
 
 	function handleLogOut() {
 		authService.logout();
@@ -66,11 +70,11 @@ const Dashboard = () => {
 			)
 		}
 		setPaginationTab(pagination);
-	}
+	};
 
 	return (
 		<div className="container">
-			<h1>나의 심플한 계시판 ({dataCount}개)</h1>
+			<h1>나의 심플한 계시판</h1>
 			<div className="row">
 				<Button onClick={() => history.push('/entry/newEntry')}>신규 계시물</Button>
 				<Button onClick={() => handleLogOut()}>Logout</Button>
