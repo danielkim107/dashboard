@@ -11,7 +11,7 @@ const LoginForm = () => {
 	const authService = new AuthService();
 
 	const onSubmit = (data: UserForm) => {
-		fetch(`http://localhost:4000/auth`, {
+		fetch(`http://localhost:4000/api/auth/login`, {
 				method: 'POST',
 				mode: 'cors',
 				headers: {

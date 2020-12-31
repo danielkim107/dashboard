@@ -14,7 +14,7 @@ const EntryForm = () => {
 	useEffect(() => {
 		if (authService.checkLogin()) {
 			if (params && params.id !== 'newEntry') {
-				fetch(`http://localhost:4000/entry/${params.id}`, {
+				fetch(`http://localhost:4000/api/entry/${params.id}`, {
 					method: 'GET',
 					mode: 'cors',
 					headers: {
@@ -42,7 +42,7 @@ const EntryForm = () => {
 		let body:any = data;
 		body.userId = authService.getUser().id;
 		let method = 'POST';
-		let url = 'http://localhost:4000/entry';
+		let url = 'http://localhost:4000/api/entry';
 		if (params && params.id !== 'newEntry') {
 			method = 'PUT';
 			url = url.concat(`/${params.id}`);

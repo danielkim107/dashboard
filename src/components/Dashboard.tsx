@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Pagination, Table } from 'react-bootstrap';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { GetEntryQuery } from '../api/api';
 import { AuthService } from '../utils/AuthService';
 
 const Dashboard = () => {
 	const history = useHistory();
-	const query = new URLSearchParams(useLocation().search);
 	const [ entryList, setEntryList ] = useState<Array<Entry>>();
 	const [ limit, setLimit ] = useState(25);
 	const [ page, setPage ] = useState(1);
@@ -40,7 +39,7 @@ const Dashboard = () => {
 		const url = `/dashboard?page=${page}&limit=${limit}`;
 		history.push(url);
 		const entries = await GetEntryQuery({page, limit});
-		setTotalPages(Math.ceil(entries.count) / limit);
+		setTotalPages(Math.ceil(entries.count / limit));
 		setEntryList(entries.data);
 	};
 
@@ -48,7 +47,7 @@ const Dashboard = () => {
 
 	async function reload() {
 		const entries = await GetEntryQuery({page, limit});
-		setTotalPages(Math.ceil(entries.count) / limit);
+		setTotalPages(Math.ceil(entries.count / limit));
 		setEntryList(entries.data);
 	};
 

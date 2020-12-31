@@ -1,30 +1,30 @@
-const url = 'http://localhost:4000'
+const url = 'http://localhost:4000';
 
 export interface GetEntryDTO {
 	page: number;
 	limit: number;
-}
+};
 
 export interface GetEntryResponse {
+	data: Array<Entry>;
 	count: number;
-	data: Array<Entry>
-}
+};
 
 // GetEntryQuery sends a request to server to fetch list of entries based on query
 export const GetEntryQuery = async (query: GetEntryDTO): Promise<GetEntryResponse> => {
-	const response = await fetch(`${url}/entry?limit=${query.limit}&page=${query.page}`, {
+	const response = await fetch(`${url}/api/entry?limit=${query.limit}&page=${query.page}`, {
 			method: 'GET',
 			mode: 'cors',
 			headers: {
 				'Content-Type': 'application/json'
 			}
 	})
-	const result = await response.json()
-	result.data.map((entry:Entry) => {
+	const result = await response.json();
+	result.data = result.data.map((entry:Entry) => {
 		entry.createdAt = new Date(entry.createdAt).toLocaleDateString();
-		return entry
+		return entry;
 	})
-	return result as GetEntryResponse
+	return result as GetEntryResponse;
 		
 		
 		// .then(response => {

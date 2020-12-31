@@ -9,7 +9,7 @@ const UserForm = () => {
 
 	const onSubmit = (data: UserForm) => {
 		let method = 'POST';
-		let url = 'http://localhost:4000/user';
+		let url = 'http://localhost:4000/api/user';
 		fetch(url, {
 			method: method,
 			mode: 'cors',
