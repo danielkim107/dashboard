@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Button, Pagination, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -11,7 +12,7 @@ const Dashboard = () => {
 	const [ page, setPage ] = useState(1);
 	const [ totalPages, setTotalPages ] = useState(1);
 	const [ paginationTab, setPaginationTab ] = useState<Array<any>>([]);
-	const paginationCount = [10, 25, 50, 100];
+	const paginationCount = [5, 10, 25, 50, 100];
 	const authService = new AuthService();
 
 	useEffect(() => {
@@ -46,9 +47,10 @@ const Dashboard = () => {
 
 
 	async function reload() {
-		const entries = await GetEntryList({page, limit});
-		setTotalPages(Math.ceil(entries.count / limit));
-		setEntryList(entries.data);
+		const response = await GetEntryList({page, limit});
+		console.log(response);
+		setTotalPages(Math.ceil(response.count / limit));
+		setEntryList(response.data);
 	};
 
 	function handleLogOut() {
@@ -104,7 +106,7 @@ const Dashboard = () => {
 				<Pagination>{paginationTab}</Pagination>
 			</div>
 			<div className="row">
-				<label htmlFor="pageCount">페이지 갯수</label>
+				<label htmlFor="pageCount">계시물 갯수</label>
 				<select id="pageCount" className="page-count" value={limit} onChange={e => handlePageCountChange(e)}>
 					{
 						paginationCount.map(num => {
