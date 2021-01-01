@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Pagination, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { GetEntryQuery } from '../api/api';
-import { AuthService } from '../utils/AuthService';
+import { GetEntryList } from '../api/EntryService';
+import { AuthService } from '../api/AuthService';
 
 const Dashboard = () => {
 	const history = useHistory();
@@ -38,7 +38,7 @@ const Dashboard = () => {
 	async function buildQuery() {
 		const url = `/dashboard?page=${page}&limit=${limit}`;
 		history.push(url);
-		const entries = await GetEntryQuery({page, limit});
+		const entries = await GetEntryList({page, limit});
 		setTotalPages(Math.ceil(entries.count / limit));
 		setEntryList(entries.data);
 	};
@@ -46,7 +46,7 @@ const Dashboard = () => {
 
 
 	async function reload() {
-		const entries = await GetEntryQuery({page, limit});
+		const entries = await GetEntryList({page, limit});
 		setTotalPages(Math.ceil(entries.count / limit));
 		setEntryList(entries.data);
 	};
@@ -75,6 +75,7 @@ const Dashboard = () => {
 		<div className="container">
 			<h1>나의 심플한 계시판</h1>
 			<div className="row">
+				<Button onClick={() => history.push('/user/newUser')} style={{float: 'left'}}>신규 유저</Button>
 				<Button onClick={() => history.push('/entry/newEntry')}>신규 계시물</Button>
 				<Button onClick={() => handleLogOut()}>Logout</Button>
 			</div>
