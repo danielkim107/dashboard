@@ -26,7 +26,7 @@ const UserForm = () => {
 				alert('실패');
 			}
 		}).finally(() => {
-			history.push('/login');
+			history.push('/dashboard');
 		});
 	};
 
