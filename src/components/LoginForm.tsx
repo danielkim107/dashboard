@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { AuthService } from '../utils/AuthService';
+import { AuthService } from '../api/AuthService';
 
 const LoginForm = () => {
 
@@ -45,8 +45,7 @@ const LoginForm = () => {
 						<Form.Control type="password" placeholder="비밀번호를 입력하세요" name="password" maxLength={50} ref={register}/>
 					</Form.Group>
 					<div className="right-align">
-						<Button type="submit" className="submit-button" style={{float: 'right'}}>Submit</Button>
-						<Button onClick={() => history.push('/user/newUser')} style={{float: 'left'}}>신규 유저</Button>
+						<Button type="submit" className="submit-button" style={{float: 'right'}}>로그인</Button>
 					</div>
 				</Form>
 			</div>
