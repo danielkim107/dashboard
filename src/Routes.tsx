@@ -4,12 +4,15 @@ import Dashboard from './components/Dashboard';
 import EntryForm from './components/EntryForm';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
+import SlotForm from './components/SlotForm';
 import UserForm from './components/UserForm';
 
 const Routes = () => {
   return (
 	<Router>
 		<Switch>
+			<Route path="/slot/:id" children={<SlotForm/>}/>
+			<Route path="/slot/newSlot" children={<SlotForm/>}/>
 			<Route path="/entry/:id" children={<EntryForm/>}/>
 			<Route path="/entry/newEntry" children={<EntryForm/>}/>
 			<Route path="/user/newUser" children={<UserForm/>}/>
