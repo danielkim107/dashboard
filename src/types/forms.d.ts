@@ -25,3 +25,17 @@ interface LoginFormDTO {
 	username: string;
 	password: string;
 };
+
+interface StudentForm {
+	name: String;
+	defaultHour: Number;
+	price: Number;
+	defaultDays: String;
+};
+
+interface StudentFormDTO {
+	name: String;
+	defaultHour: Number;
+	price: Number;
+	defaultDays: Array<String>
+};
