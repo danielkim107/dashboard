@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
-import { AuthService } from '../api/AuthService';
+import { AuthService } from '../api/auth/AuthService';
 import { CreateEntry, GetEntryById, UpdateEntry } from '../api/EntryService';
 
 const EntryForm = () => {

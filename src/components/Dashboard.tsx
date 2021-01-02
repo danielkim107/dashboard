@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Pagination, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { GetEntryList } from '../api/EntryService';
-import { AuthService } from '../api/AuthService';
+import { AuthService } from '../api/auth/AuthService';
 
 const Dashboard = () => {
 	const history = useHistory();
