@@ -26,24 +26,36 @@ interface LoginFormDTO {
 	password: string;
 };
 
+interface StudentListResponse {
+	id: number;
+	name: string;
+	tutorDays: Array<number>;
+};
+
+interface StudentList {
+	id: number;
+	name: string;
+	tutorDays: string;
+};
+
 interface StudentForm {
-	name: String;
-	defaultHour: Number;
-	price: Number;
-	tutorDays: String;
+	name: string;
+	defaultHour: number;
+	price: number;
+	tutorDays: string;
 };
 
 interface StudentFormDTO {
-	name: String;
-	defaultHour: Number;
-	price: Number;
-	tutorDays: Array<Number>;
-	teacherId: Number;
+	name: string;
+	defaultHour: number;
+	price: number;
+	tutorDays: Array<number>;
+	teacherId: number;
 };
 
 interface GetStudentResponse {
-	name: String;
-	defaultHour: Number;
-	price: Number;
-	tutorDays: Array<Number>;
+	name: string;
+	defaultHour: number;
+	price: number;
+	tutorDays: Array<number>;
 }
