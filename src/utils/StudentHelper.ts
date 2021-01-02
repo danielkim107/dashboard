@@ -1,8 +1,5 @@
-import Cookies from 'js-cookie';
-
-export const updateStudentFormData = (data: StudentForm): StudentFormDTO => {
-	let tutorDays = data.tutorDays;
-	let formattedTutorDays: Array<Number> = tutorDays.split('').map(day => {
+export const convertDaysToNumberDays = (tutorDays: string): Array<number> => {
+	let formattedTutorDays: Array<number> = tutorDays.split('').map(day => {
 		switch(day) {
 			case '일':
 				return 0;
@@ -23,11 +20,10 @@ export const updateStudentFormData = (data: StudentForm): StudentFormDTO => {
 		};
 	});
 
-	return {...data, tutorDays: formattedTutorDays, teacherId: parseInt(Cookies.get('teacherId')!)};
+	return formattedTutorDays;
 };
 
-export const updateStudentResponseData = (data: GetStudentResponse): StudentForm => {
-	let tutorDays = data.tutorDays;
+export const convertNumberDaysToDays = (tutorDays: Array<number>): string => {
 	let formattedTutorDays = '';
 	tutorDays.forEach(day => {
 		switch(day) {
@@ -53,6 +49,15 @@ export const updateStudentResponseData = (data: GetStudentResponse): StudentForm
 				formattedTutorDays = formattedTutorDays.concat('토');
 				break;
 		}
-	})
-	return {...data, tutorDays: formattedTutorDays};
-}
+	});
+	return formattedTutorDays;
+};
+
+export const normalizeStudentListData = (data: Array<StudentListResponse>): Array<StudentList> => {
+	let updatedData: Array<StudentList> = data.map(student => {
+		let tableTutorDays = convertNumberDaysToDays(student.tutorDays).split('').join('요일 ').concat('요일');
+		return {...student, tutorDays: tableTutorDays};
+	});
+	return updatedData;
+
+};

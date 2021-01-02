@@ -1,9 +1,10 @@
+import Cookies from 'js-cookie';
 import React, { useEffect } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import { CreateStudent, GetStudent, UpdateStudent } from '../../api/student/StudentService';
-import { updateStudentFormData, updateStudentResponseData } from '../../utils/StudentHelper';
+import { convertDaysToNumberDays, convertNumberDaysToDays } from '../../utils/StudentHelper';
 
 const StudentForm = () => {
 	const history = useHistory();
@@ -12,14 +13,15 @@ const StudentForm = () => {
 	const { register, handleSubmit, reset } = useForm<StudentForm>();
 
 	useEffect(() => {
-		const getData = async () => {
-			await loadData(params.id);
+		const getStudentData = async () => {
+			await loadStudentData(params.id);
 		}
-		getData();
+		getStudentData();
 	}, []);
 
 	const onSubmit = async (data: StudentForm) => {
-		const updatedData = updateStudentFormData(data);
+		const numberTutorDays = convertDaysToNumberDays(data.tutorDays);
+		const updatedData = {...data, tutorDays: numberTutorDays, teacherId: parseInt(Cookies.get('teacherId')!)};
 		let response: Response;
 		if (location.pathname === '/newStudent') {
 			response = await CreateStudent(updatedData);
@@ -34,9 +36,10 @@ const StudentForm = () => {
 		}
 	};
 
-	const loadData = async (id: String) => {
+	const loadStudentData = async (id: string) => {
 		const data = await GetStudent(id);
-		const updatedData = updateStudentResponseData(data);
+		const stringTutorDays = convertNumberDaysToDays(data.tutorDays);
+		const updatedData = {...data, tutorDays: stringTutorDays};
 		reset(updatedData);
 	};
 

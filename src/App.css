@@ -1,3 +1,7 @@
+caption {
+	caption-side: top;
+}
+
 .delete-button {
 	margin-left: 5px;
 }
@@ -20,7 +24,7 @@
 .registration-box {
 	position: relative;
 	background: lightgrey;
-	height: 400px;
+	height: 450px;
 	width: 60%;
 	margin: 0 auto;
 	padding: 20px;
