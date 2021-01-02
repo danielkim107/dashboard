@@ -5,8 +5,8 @@ import EntryForm from './components/EntryForm';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import SlotForm from './components/SlotForm';
+import StudentForm from './components/student/StudentForm';
 import TeacherSignUpForm from './components/teacher/TeacherSignupForm';
-import UserForm from './components/UserForm';
 
 const Routes = () => {
   return (
@@ -16,9 +16,9 @@ const Routes = () => {
 			<Route path="/slot/newSlot" children={<SlotForm/>}/>
 			<Route path="/entry/:id" children={<EntryForm/>}/>
 			<Route path="/entry/newEntry" children={<EntryForm/>}/>
-			<Route path="/user/newUser" children={<UserForm/>}/>
+			<Route path="/newStudent" component={StudentForm}/>
 			<Route path="/newTeacher" component={TeacherSignUpForm}/>
-			<Route path="/login" children={<LoginForm/>}/>
+			<Route path="/login" component={LoginForm}/>
 			<Route path="/dashboard" component={Dashboard}/>
 			<Route path="/" component={Home}/>
 		</Switch>
