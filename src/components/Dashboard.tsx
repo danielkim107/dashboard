@@ -77,7 +77,7 @@ const Dashboard = () => {
 		<div className="container">
 			<h1>나의 심플한 계시판</h1>
 			<div className="row">
-				<Button onClick={() => history.push('/user/newUser')} style={{float: 'left'}}>신규 유저</Button>
+				<Button onClick={() => history.push('/newStudent')}>신규 학생 등록</Button>
 				<Button onClick={() => history.push('/entry/newEntry')}>신규 계시물</Button>
 				<Button onClick={() => handleLogOut()}>Logout</Button>
 			</div>

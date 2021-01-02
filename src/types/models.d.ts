@@ -1,3 +1,4 @@
+////////// Entry Start //////////
 type Entry = {
 	id: number,
 	user: User,
@@ -27,8 +28,21 @@ interface CreateEntryDTO {
 	title: string;
 	content: string;
 };
+/////////// Entry End ///////////
 
+////////// User Start ///////////
 type User = {
 	id: number,
 	username: string
 };
+////////// User End /////////////
+
+////////// Slot Start ///////////
+type Slot = {
+	id: number,
+	adminId: number,
+	studentId: number,
+	time: number,
+	startAt: string,
+};
+////////// Slot End /////////////

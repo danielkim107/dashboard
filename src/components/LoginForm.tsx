@@ -2,41 +2,27 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { AuthService } from '../api/AuthService';
+import { Login } from '../api/AuthService';
 
 const LoginForm = () => {
 
 	const { register, handleSubmit } = useForm<UserForm>();
 	const history = useHistory();
-	const authService = new AuthService();
 
-	const onSubmit = (data: UserForm) => {
-		fetch(`http://localhost:4000/api/auth/login`, {
-				method: 'POST',
-				mode: 'cors',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			}).then(response => {
-				if (response.status === 200) {
-					return response.json();
-				} else {
-					return alert('Incorrect username and/or password.');
-				}
-			}).then((result) => {
-				if (result) {
-					authService.login(result.user);
-					history.push('/dashboard');
-				}
-			})
+	const onSubmit = async (data: LoginFormDTO) => {
+		const response = await Login(data);
+		if (response.ok) {
+			history.push('/dashboard');
+		} else {
+			alert('아이디/비빌번호가 맞지 않습니다');
+		}
 	};
 
 	return (
 		<div className="container">
 			<div className="registration-box">
 				<Form onSubmit={handleSubmit(onSubmit)}>
-					<Form.Group controlId="author">
+					<Form.Group controlId="username">
 						<Form.Label>아이디</Form.Label>
 						<Form.Control type="text" placeholder="아이디를 입력하세요" name="username" maxLength={50} ref={register}/>
 					</Form.Group>
@@ -45,6 +31,7 @@ const LoginForm = () => {
 						<Form.Control type="password" placeholder="비밀번호를 입력하세요" name="password" maxLength={50} ref={register}/>
 					</Form.Group>
 					<div className="right-align">
+						<Button onClick={() => history.push('/newTeacher')} style={{float: 'left'}}>선생님 등록</Button>
 						<Button type="submit" className="submit-button" style={{float: 'right'}}>로그인</Button>
 					</div>
 				</Form>
