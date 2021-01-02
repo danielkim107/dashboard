@@ -1,4 +1,4 @@
-import { API_URL } from '../../constants';
+import { API_URL } from "../../constants";
 
 export const SignupTeacher = async (data: TeacherSignupFormDTO): Promise<Response> => {
 	const response = await fetch(`${API_URL}/teacher`, {

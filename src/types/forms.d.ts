@@ -30,12 +30,20 @@ interface StudentForm {
 	name: String;
 	defaultHour: Number;
 	price: Number;
-	defaultDays: String;
+	tutorDays: String;
 };
 
 interface StudentFormDTO {
 	name: String;
 	defaultHour: Number;
 	price: Number;
-	defaultDays: Array<String>
+	tutorDays: Array<Number>;
+	teacherId: Number;
 };
+
+interface GetStudentResponse {
+	name: String;
+	defaultHour: Number;
+	price: Number;
+	tutorDays: Array<Number>;
+}

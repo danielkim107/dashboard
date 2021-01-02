@@ -6,7 +6,7 @@ import { SignupTeacher } from '../../api/teacher/TeacherService';
 
 const TeacherSignUpForm = () => {
 	const history = useHistory();
-	const { register, handleSubmit } = useForm<UserForm>();
+	const { register, handleSubmit } = useForm<TeacherSignupFormDTO>();
 
 	const onSubmit = async (data: TeacherSignupFormDTO) => {
 		const response = await SignupTeacher(data);
