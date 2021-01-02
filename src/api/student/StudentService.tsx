@@ -1,4 +1,4 @@
-import { API_URL } from '../constants';
+import { API_URL } from '../../constants';
 
 // GetEntryQuery sends a request to server to fetch list of entries based on query.
 export const GetStudentList = async (): Promise<Array<User>> => {

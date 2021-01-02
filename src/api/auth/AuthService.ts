@@ -1,5 +1,5 @@
 import * as Cookies from 'js-cookie';
-import { API_URL } from '../constants';
+import { API_URL } from '../../constants';
 
 export class AuthService {
 	
@@ -16,8 +16,9 @@ export class AuthService {
 	}
 };
 
-const setLogin = (user: User) => {
-	Cookies.set('user', user);
+const setLogin = (teacher: User) => {
+	Cookies.set('teacherId', teacher.id.toString());
+	Cookies.set('teacherName', teacher.username);
 	Cookies.set('loggedIn', 'true');
 };
 
@@ -32,8 +33,8 @@ export const Login = async (data: LoginFormDTO): Promise<Response> => {
 		
 	});
 	if (response.ok) {
-		const user: User = await response.json();
-		setLogin(user);
+		const teacher: User = await response.json();
+		setLogin(teacher);
 	}
 
 	return response as Response;
