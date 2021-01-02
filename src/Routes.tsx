@@ -16,6 +16,7 @@ const Routes = () => {
 			<Route path="/slot/newSlot" children={<SlotForm/>}/>
 			<Route path="/entry/:id" children={<EntryForm/>}/>
 			<Route path="/entry/newEntry" children={<EntryForm/>}/>
+			<Route path="/student/:id" component={StudentForm}/>
 			<Route path="/newStudent" component={StudentForm}/>
 			<Route path="/newTeacher" component={TeacherSignUpForm}/>
 			<Route path="/login" component={LoginForm}/>
