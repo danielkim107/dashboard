@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { GetStudentList } from '../api/student/StudentService';
 import { normalizeStudentListData } from '../utils/StudentHelper';
 import LogoutButton from './auth/LogoutButton';
+import SelectDateSlotForm from './slot/SelectDateSlotForm';
 import StudentFormButton from './student/StudentFormButton';
 import StudentTable from './student/StudentTable';
 
@@ -32,6 +33,7 @@ const Dashboard = () => {
 				<LogoutButton/>
 			</div>
 			<StudentTable studentList={studentList}/>
+			<SelectDateSlotForm/>
 		</div>
 	);
 };
