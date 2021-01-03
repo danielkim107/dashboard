@@ -1,15 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import { LogOut } from '../api/auth/AuthService';
 import { GetStudentList } from '../api/student/StudentService';
 import { normalizeStudentListData } from '../utils/StudentHelper';
 import LogoutButton from './auth/LogoutButton';
 import StudentFormButton from './student/StudentFormButton';
+import StudentTable from './student/StudentTable';
 
 const Dashboard = () => {
-	const history = useHistory();
 	const [ studentList, setStudentList ] = useState<Array<StudentList>>([]);
 
 	useEffect(() => {
@@ -34,24 +31,7 @@ const Dashboard = () => {
 				<StudentFormButton/>
 				<LogoutButton/>
 			</div>
-			<Table striped bordered hover>
-				<caption>학생 목록</caption>
-				<thead>
-					<tr>
-						<th>이름</th>
-						<th>과외 날짜</th>
-					</tr>
-				</thead>
-				<tbody>
-					{studentList.map((student) => {
-						return (
-							<tr key={student.id} onClick={() => history.push(`/student/${student.id}`)}>
-								<td>{student.name}</td>
-								<td>{student.tutorDays}</td>
-							</tr>
-					)})}
-				</tbody>
-			</Table>
+			<StudentTable studentList={studentList}/>
 		</div>
 	);
 };
