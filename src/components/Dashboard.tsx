@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { LogOut } from '../api/auth/AuthService';
 import { GetStudentList } from '../api/student/StudentService';
 import { normalizeStudentListData } from '../utils/StudentHelper';
 
@@ -23,6 +24,7 @@ const Dashboard = () => {
 	};
 
 	function handleLogOut() {
+		LogOut();
 		history.push('/login');
 	};
 

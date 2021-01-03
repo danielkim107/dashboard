@@ -22,6 +22,12 @@ const setLogin = (teacher: User) => {
 	Cookies.set('loggedIn', 'true');
 };
 
+export const LogOut = () => {
+	Cookies.remove('teacherId');
+	Cookies.remove('teacherName');
+	Cookies.remove('loggedIn');
+};
+
 export const Login = async (data: LoginFormDTO): Promise<Response> => {
 	const response = await fetch(`${API_URL}/auth/login`, {
 		method: 'POST',
