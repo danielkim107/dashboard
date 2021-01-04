@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
-import EntryForm from './components/EntryForm';
 import Home from './components/Home';
 import LoginForm from './components/LoginForm';
 import SlotForm from './components/SlotForm';
@@ -13,9 +12,6 @@ const Routes = () => {
 	<Router>
 		<Switch>
 			<Route path="/slot/:id" children={<SlotForm/>}/>
-			<Route path="/slot/newSlot" children={<SlotForm/>}/>
-			<Route path="/entry/:id" children={<EntryForm/>}/>
-			<Route path="/entry/newEntry" children={<EntryForm/>}/>
 			<Route path="/student/:id" component={StudentForm}/>
 			<Route path="/newStudent" component={StudentForm}/>
 			<Route path="/newTeacher" component={TeacherSignUpForm}/>

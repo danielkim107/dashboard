@@ -38,7 +38,7 @@ type User = {
 ////////// User End /////////////
 
 ////////// Slot Start ///////////
-type Slot = {
+type SlotDataForm = {
 	id: number,
 	adminId: number,
 	studentId: number,

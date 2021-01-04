@@ -1,51 +1,79 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Col, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { GetStudentList } from '../api/student/StudentService';
+import { useParams } from 'react-router-dom';
+import { GetSlotById, GetSlotByIdResponse, StudentSlotInfo, UpdateSlot } from '../api/slot/SlotService';
+import { explodeSlotData, implodeSlotData } from '../utils/SlotHelper';
 
 const SlotForm = () => {
-	const { register, handleSubmit, reset } = useForm<EntryForm>();
-	const [ studentList, setStudentList ] = useState<Array<User>>([]);
+	const [ studentInfo, setStudentInfo ] = useState<Array<StudentSlotInfo>>([]);
+	const [ studentIdList, setStudentIdList ] = useState<Array<number>>([]);
+	const params: Param = useParams();
+	const { register, handleSubmit, reset } = useForm();
+
 	useEffect(() => {
-		const getData = async () => {
-			await reload();
+		const loadFormData = async () => {
+			await getData();
 		}
-		getData();
+		loadFormData();
 	}, []);
 
-	async function reload() {
-		const students = await GetStudentList();
-		setStudentList(students);
+	const getData = async () => {
+		const data: GetSlotByIdResponse = await GetSlotById(params.id);
+		setStudentInfo(data.studentInfo);
+		const [formData, studentIdList] = explodeSlotData(data);
+		setStudentIdList(studentIdList);
+		reset(formData);
 	};
 
-	const onSubmit = async (data: SlotForm) => {
-		console.log(data);
+	const onSubmit = async (formData: any) => {
+		const data = implodeSlotData(formData, studentIdList);
+		const response = await UpdateSlot(data, params.id);
+		if (response.ok) {
+			alert('수정 완료.');
+			await getData();
+		}
 	};
 
 	return (
 		<div className="container">
 			<Form onSubmit={handleSubmit(onSubmit)}>
-				<Form.Group controlId="adminId">
-					<Form.Label>선생님</Form.Label>
-					<Form.Control as="select" type="number" placeholder="선생님" name="adminId" ref={register({required: true})}>
-						{
-							studentList.map(student => {
-								return (<option key={student.id} value={student.id}>{student.username}</option>)
-							})
-						}
-					</Form.Control>
+				<Form.Group controlId="date">
+					<Form.Label>날짜</Form.Label>
+					<Form.Control type="text" name="date" maxLength={50} ref={register} readOnly/>
 				</Form.Group>
-				<Form.Group controlId="time">
-					<Form.Label>과외 시간</Form.Label>
-					<Form.Control type="number" placeholder="2" name="time" ref={register({required: true})}/>
+				{studentInfo.map((student, index) => {
+					let studentHour = `studentHour${student.studentId}`;
+					let studentPrice = `studentPrice${student.studentId}`;
+					let studentName = `studentName${student.studentId}`;
+					return (
+						<Form.Row className="align-items-center" key={student.studentId}>
+							<Col sm={2} className="my-1">
+								<Form.Label htmlFor={studentName} srOnly={index !== 0}>
+									이름
+								</Form.Label>
+								<Form.Control id={studentName} name={studentName} ref={register} readOnly/>
+							</Col>
+							<Col sm={2} className="my-1">
+								<Form.Label htmlFor={studentHour} srOnly={index !== 0}>
+									시간
+								</Form.Label>
+								<Form.Control type="number" step={0.1} id={studentHour} name={studentHour} ref={register}/>
+							</Col>
+							<Col sm={2} className="my-1">
+								<Form.Label htmlFor={studentPrice} srOnly={index !== 0}>
+									가격
+								</Form.Label>
+								<Form.Control id={studentPrice} name={studentPrice} ref={register}/>
+							</Col>
+						</Form.Row>
+					)
+				})}
+				<Form.Group controlId="totalAmount">
+					<Form.Label>오늘 금액</Form.Label>
+					<Form.Control type="number" name="totalAmount" readOnly ref={register}/>
 				</Form.Group>
-				<Form.Group controlId="startAt">
-					<Form.Label>시작 날짜/시간</Form.Label>
-					<Form.Control type="date" name="startAt"/>
-				</Form.Group>
-				<Button variant="primary" type="submit">
-					Submit
-				</Button>
+				<Button type="submit" className="submit-button" style={{float: 'right'}}>수정</Button>
 			</Form>
 		</div>
 	)

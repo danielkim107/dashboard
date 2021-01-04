@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
-import { getSlotByDate } from '../../api/slot/SlotService';
+import { GetSlotByDate } from '../../api/slot/SlotService';
 
 interface DateSlotForm {
 	datePicker: Date;
@@ -13,7 +13,7 @@ const SelectDateSlotForm = () => {
 	const history = useHistory();
 
 	const onSubmit = async (data: DateSlotForm) => {
-		const responseData = await getSlotByDate(data.datePicker);
+		const responseData = await GetSlotByDate(data.datePicker);
 		history.push(`/slot/${responseData.id}`);
 	};
 	
