@@ -41,6 +41,8 @@ interface StudentList {
 interface StudentForm {
 	name: string;
 	defaultHour: number;
+	defaultTimeStart: string;
+	defaultTimeEnd: string;
 	price: number;
 	tutorDays: string;
 };

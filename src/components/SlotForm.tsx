@@ -46,6 +46,8 @@ const SlotForm = () => {
 					let studentHour = `studentHour${student.studentId}`;
 					let studentPrice = `studentPrice${student.studentId}`;
 					let studentName = `studentName${student.studentId}`;
+					let studentStartTime = `studentStartTime${student.studentId}`;
+					let studentEndTime = `studentEndTime${student.studentId}`;
 					return (
 						<Form.Row className="align-items-center" key={student.studentId}>
 							<Col sm={2} className="my-1">
@@ -66,12 +68,28 @@ const SlotForm = () => {
 								</Form.Label>
 								<Form.Control id={studentPrice} name={studentPrice} ref={register}/>
 							</Col>
+							<Col sm={2} className="my-1">
+								<Form.Label htmlFor={studentStartTime} srOnly={index !== 0}>
+									시작
+								</Form.Label>
+								<Form.Control type="time" id={studentStartTime} name={studentStartTime} ref={register}/>
+							</Col>
+							<Col sm={2} className="my-1">
+								<Form.Label htmlFor={studentEndTime} srOnly={index !== 0}>
+									종료
+								</Form.Label>
+								<Form.Control type="time" id={studentEndTime} name={studentEndTime} ref={register}/>
+							</Col>
 						</Form.Row>
 					)
 				})}
 				<Form.Group controlId="totalAmount">
 					<Form.Label>오늘 금액</Form.Label>
 					<Form.Control type="number" name="totalAmount" readOnly ref={register}/>
+				</Form.Group>
+				<Form.Group controlId="memo">
+					<Form.Label>메모장</Form.Label>
+					<Form.Control as="textarea" rows={6} name="memo" ref={register}/>
 				</Form.Group>
 				<Button type="submit" className="submit-button" style={{float: 'right'}}>수정</Button>
 			</Form>

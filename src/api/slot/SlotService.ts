@@ -6,9 +6,10 @@ export interface GetSlotByDateResponse {
 };
 
 export interface GetSlotByIdResponse {
-	date: Date;
+	date: string;
 	studentInfo: Array<StudentSlotInfo>;
 	totalAmount: number;
+	memo: string;
 };
 
 export interface StudentSlotInfo {
@@ -16,11 +17,13 @@ export interface StudentSlotInfo {
 	hours: number;
 	price: number;
 	name: string;
+	timeRange: Array<string>;
 };
 
 export interface UpdateSlotDTO {
 	studentInfo: Array<StudentSlotInfo>;
 	totalAmount: number;
+	memo: string;
 };
 
 export const GetSlotById = async (id: string): Promise<GetSlotByIdResponse> => {
@@ -37,7 +40,7 @@ export const GetSlotById = async (id: string): Promise<GetSlotByIdResponse> => {
 	return result as GetSlotByIdResponse;
 };
 
-export const GetSlotByDate = async (date: Date): Promise<GetSlotByDateResponse> => {
+export const GetSlotByDate = async (date: string): Promise<GetSlotByDateResponse> => {
 	let teacherId = Cookies.get('teacherId');
 	const response = await fetch(`${API_URL}/slotDate?date=${date}&teacherId=${teacherId}`, {
 		method: 'GET',

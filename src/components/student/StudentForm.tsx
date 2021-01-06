@@ -59,9 +59,17 @@ const StudentForm = () => {
 						<Form.Label>시간 당 가격</Form.Label>
 						<Form.Control type="number" placeholder="50000" name="price" ref={register({required: true})}/>
 					</Form.Group>
+					<Form.Group controlId="defaultTimeStart">
+						<Form.Label>평소 시작하는 시간</Form.Label>
+						<Form.Control type="time" name="defaultTimeStart" ref={register}/>
+					</Form.Group>
+					<Form.Group controlId="defaultTimeEnd">
+						<Form.Label>평소 끝나는 시간</Form.Label>
+						<Form.Control type="time" name="defaultTimeEnd" ref={register}/>
+					</Form.Group>
 					<Form.Group controlId="tutorDays">
 						<Form.Label>평소 과외 하는 날</Form.Label>
-						<Form.Control type="text" placeholder="예시) 월수금 / 화목토 / 월화수목금토일" name="tutorDays" ref={register({required: true})}/>
+						<Form.Control type="text" placeholder="예시) 월수금 / 화목토 / 월화수목금토일" name="tutorDays" ref={register}/>
 					</Form.Group>
 					<Button variant="primary" type="submit">
 						생성
