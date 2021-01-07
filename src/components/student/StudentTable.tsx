@@ -3,7 +3,7 @@ import { Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 interface StudentTableProps {
-	studentList: Array<StudentList>;
+	studentList: Array<Student>;
 };
 
 const StudentTable: React.FC<StudentTableProps> = ({ studentList }) => {

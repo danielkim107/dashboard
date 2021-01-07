@@ -53,8 +53,8 @@ export const convertNumberDaysToDays = (tutorDays: Array<number>): string => {
 	return formattedTutorDays;
 };
 
-export const normalizeStudentListData = (data: Array<StudentListResponse>): Array<StudentList> => {
-	let updatedData: Array<StudentList> = data.map(student => {
+export const normalizeStudentListData = (data: Array<StudentListResponse>): Array<Student> => {
+	let updatedData: Array<Student> = data.map(student => {
 		let tableTutorDays = convertNumberDaysToDays(student.tutorDays).split('').join('요일 ').concat('요일');
 		return {...student, tutorDays: tableTutorDays};
 	});

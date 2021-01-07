@@ -1,4 +1,4 @@
-import { GetSlotByIdResponse, StudentSlotInfo, UpdateSlotDTO } from './../api/slot/SlotService';
+import { GetSlotByIdResponse, UpdateSlotDTO } from './../api/slot/SlotService';
 
 export const explodeSlotData = (data: GetSlotByIdResponse) => {
 	let date = data.date;
@@ -35,4 +35,18 @@ export const implodeSlotData = (data: any, studentIdList: Array<number>): Update
 
 	studentInfo.sort((a, b) => Date.parse(data.date.concat(` ${a.timeRange[0]}`)) > Date.parse(data.date.concat(` ${b.timeRange[0]}`)) ? 1 : -1);
 	return {studentInfo: studentInfo, totalAmount: totalAmount, memo: data.memo};
+};
+
+
+export function getMondaySundayRange(day: Date): Array<string> {
+	let first = day.getDate() - day.getDay() + 1;
+	let monday = new Date(day.setDate(first));
+	let sunday = new Date(day.setDate(first + 6));
+	return [getDateString(monday), getDateString(sunday)];
+};
+
+export function getDateString(date: Date): string {
+	let offset = date.getTimezoneOffset();
+	let currentTimeZoneDate = new Date(date.getTime() + (offset*60*1000));
+	return currentTimeZoneDate.toISOString().split('T')[0];
 };

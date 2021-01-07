@@ -2,6 +2,20 @@ caption {
 	caption-side: top;
 }
 
+ul {
+	padding-inline-start: 0;
+}
+
+.card {
+	width: 220px;
+	cursor: pointer;
+	text-align: center;
+	margin-right: 10px;
+	border-radius: 20px;
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
 .delete-button {
 	margin-left: 5px;
 }
@@ -52,4 +66,14 @@ caption {
 	padding: 6px 12px;
 	border-radius: 5px;
 	cursor: pointer;
+}
+
+.weekly-row {
+	margin-top: 30px;
+	align-items: stretch;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	overflow-y: hidden;
 }

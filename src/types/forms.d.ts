@@ -32,10 +32,16 @@ interface StudentListResponse {
 	tutorDays: Array<number>;
 };
 
-interface StudentList {
+interface Student {
 	id: number;
 	name: string;
 	tutorDays: string;
+};
+
+interface Slot {
+	id: number;
+	date: string;
+	studentInfo: Array<StudentSlotInfo>;
 };
 
 interface StudentForm {
@@ -60,4 +66,12 @@ interface GetStudentResponse {
 	defaultHour: number;
 	price: number;
 	tutorDays: Array<number>;
-}
+};
+
+interface StudentSlotInfo {
+	studentId: number;
+	hours: number;
+	price: number;
+	name: string;
+	timeRange: Array<string>;
+};
