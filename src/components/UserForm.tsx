@@ -26,7 +26,7 @@ const UserForm = () => {
 				alert('실패');
 			}
 		}).finally(() => {
-			history.push('/login');
+			history.push('/dashboard');
 		});
 	};
 
@@ -51,6 +51,15 @@ const UserForm = () => {
 								You must enter a password.
 							</Form.Text>
 						)}
+					</Form.Group>
+					<Form.Group controlId="isSuperuser">
+						<Form.Check type="checkbox" name="isSuperuser" ref={register} label="슈퍼유저 여부"/>
+					</Form.Group>
+					<Form.Group controlId="isAdmin">
+						<Form.Check type="checkbox" name="isAdmin" ref={register} label="선생님 여부"/>
+					</Form.Group>
+					<Form.Group controlId="isStudent">
+						<Form.Check type="checkbox" name="isStudent" ref={register} label="학생 여부"/>
 					</Form.Group>
 					<Button variant="primary" type="submit">
 						생성

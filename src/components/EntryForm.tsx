@@ -1,36 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
-import { AuthService } from '../utils/AuthService';
+import { AuthService } from '../api/auth/AuthService';
+import { CreateEntry, GetEntryById, UpdateEntry } from '../api/EntryService';
 
 const EntryForm = () => {
 	const history = useHistory();
 	const params: Param  = useParams();
 	const { register, handleSubmit, errors, reset } = useForm<EntryForm>();
-	const [ userId, setUserId ] = useState();
+	const [ userId, setUserId ] = useState(0);
 	const authService = new AuthService();
 
 	useEffect(() => {
+		const getEntryById = async () => {
+			await reload();
+		};
 		if (authService.checkLogin()) {
 			if (params && params.id !== 'newEntry') {
-				fetch(`http://localhost:4000/api/entry/${params.id}`, {
-					method: 'GET',
-					mode: 'cors',
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				}).then(response => {
-					return response.json();
-				}).then(result => {
-					if (Object.keys(result).length === 0) {
-						alert('존재하지 않아, 접근할 수 없습니다.');
-						history.push('/dashboard');
-					} else {
-						reset(result);
-						setUserId(result.userId);
-					}
-				})
+				getEntryById();
 			}
 		} else {
 			alert('로그인이 되어 있지 않습니다. 로그인 해주세요.');
@@ -38,33 +27,19 @@ const EntryForm = () => {
 		}
 	}, []);
 
-	const onSubmit = (data: EntryForm) => {
-		let body:any = data;
-		body.userId = authService.getUser().id;
-		let method = 'POST';
-		let url = 'http://localhost:4000/api/entry';
+	const onSubmit = async (data: EntryForm) => {
+		let result;
+		let userId = authService.getUser().id;
+		let body: CreateEntryDTO = {...data, userId: userId};
 		if (params && params.id !== 'newEntry') {
-			method = 'PUT';
-			url = url.concat(`/${params.id}`);
+			result = await UpdateEntry(body, params.id);
+		} else {
+			result = await CreateEntry(body);
 		}
-		fetch(url, {
-			method: method,
-			mode: 'cors',
-			cache: 'no-cache',
-			headers: {
-			  'Content-Type': 'application/json'
-			},
-			referrerPolicy: 'no-referrer',
-			body: JSON.stringify(body)
-		}).then(response => {
-			if (response.ok) {
-				alert('계시글 생성 완료');
-			} else {
-				alert('실패');
-			}
-		}).finally(() => {
-			history.push('/dashboard');
-		});
+		if (result) {
+			alert('계시물 생성');
+		}
+		history.push('/dashboard');
 	};
 
 	const checkUser = () => {
@@ -73,6 +48,12 @@ const EntryForm = () => {
 		} else {
 			return false;
 		}
+	}
+
+	async function reload() {
+		const result = await GetEntryById(params.id);
+		reset(result);
+		setUserId(result.userId);
 	}
 
 	return (
