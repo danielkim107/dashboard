@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { getWeeklySlotList } from '../api/slot/SlotService';
-import { GetStudentList } from '../api/student/StudentService';
-import { normalizeStudentListData } from '../utils/StudentHelper';
-import LogoutButton from './auth/LogoutButton';
-import SelectDateSlotForm from './slot/SelectDateSlotForm';
-import WeeklySlotList from './slot/WeeklySlotList';
-import StudentFormButton from './student/StudentFormButton';
-import StudentTable from './student/StudentTable';
+import { getWeeklySlotList } from '../../api/slot/SlotService';
+import { GetStudentList } from '../../api/student/StudentService';
+import { normalizeStudentListData } from '../../utils/StudentHelper';
+import LogoutButton from '../button/LogoutButton';
+import SelectDateSlotForm from '../form/SelectDateSlotForm';
+import WeeklySlotList from '../list/WeeklySlotList';
+import StudentFormButton from '../button/StudentFormButton';
+import StudentTable from '../table/StudentTable';
 
 const Dashboard = () => {
 	const [ studentList, setStudentList ] = useState<Array<Student>>([]);

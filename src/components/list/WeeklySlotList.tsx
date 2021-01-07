@@ -1,5 +1,5 @@
 import React from 'react';
-import SlotCard from './SlotCard';
+import SlotCard from '../card/SlotCard';
 
 interface WeeklySlotListProps {
 	slotList: Array<Slot>;
