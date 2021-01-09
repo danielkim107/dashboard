@@ -16,7 +16,7 @@ export class AuthService {
 	}
 };
 
-const setLogin = (teacher: User) => {
+const setLogin = (teacher: UserSignIn) => {
 	Cookies.set('teacherId', teacher.id.toString());
 	Cookies.set('teacherName', teacher.username);
 	Cookies.set('loggedIn', 'true');
@@ -39,7 +39,7 @@ export const Login = async (data: LoginFormDTO): Promise<Response> => {
 		
 	});
 	if (response.ok) {
-		const teacher: User = await response.json();
+		const teacher: UserSignIn = await response.json();
 		setLogin(teacher);
 	}
 

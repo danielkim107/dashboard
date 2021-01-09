@@ -2,23 +2,6 @@ import Cookies  from 'js-cookie';
 import { getMondaySundayRange } from '../../utils/SlotHelper';
 import { API_URL } from './../../constants';
 
-export interface GetSlotByDateResponse {
-	id: number;
-};
-
-export interface GetSlotByIdResponse {
-	date: string;
-	studentInfo: Array<StudentSlotInfo>;
-	totalAmount: number;
-	memo: string;
-};
-
-export interface UpdateSlotDTO {
-	studentInfo: Array<StudentSlotInfo>;
-	totalAmount: number;
-	memo: string;
-};
-
 export const getWeeklySlotList = async (date: Date): Promise<Array<Slot>> => {
 	const [monday, sunday] = getMondaySundayRange(date);
 	const response = await fetch(`${API_URL}/slot?start=${monday}&end=${sunday}`, {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { GetSlotById, GetSlotByIdResponse, UpdateSlot } from '../../api/slot/SlotService';
+import { GetSlotById, UpdateSlot } from '../../api/slot/SlotService';
 import { explodeSlotData, implodeSlotData } from '../../utils/SlotHelper';
 
 const SlotForm = () => {
