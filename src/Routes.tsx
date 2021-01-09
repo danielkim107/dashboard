@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Dashboard from './components/Dashboard';
-import Home from './components/Home';
-import LoginForm from './components/LoginForm';
-import SlotForm from './components/SlotForm';
-import StudentForm from './components/student/StudentForm';
-import TeacherSignUpForm from './components/teacher/TeacherSignupForm';
+import Dashboard from './components/page/Dashboard';
+import Home from './components/page/Home';
+import LoginForm from './components/form/LoginForm';
+import SlotForm from './components/form/SlotForm';
+import StudentForm from './components/form/StudentForm';
+import TeacherSignUpForm from './components/form/TeacherSignupForm';
 
 const Routes = () => {
   return (

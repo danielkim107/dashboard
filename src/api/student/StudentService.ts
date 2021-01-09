@@ -1,8 +1,7 @@
 import { API_URL } from '../../constants';
 import Cookies from 'js-cookie';
 
-// GetEntryQuery sends a request to server to fetch list of entries based on query.
-export const GetStudentList = async (): Promise<Array<StudentListResponse>> => {
+export const GetStudentList = async (): Promise<Array<GetStudentListResponse>> => {
 	let teacherId = Cookies.get('teacherId');
 	const response = await fetch(`${API_URL}/student?teacherId=${teacherId}`, {
 			method: 'GET',
@@ -13,7 +12,7 @@ export const GetStudentList = async (): Promise<Array<StudentListResponse>> => {
 	});
 	const result = await response.json();
 
-	return result as Array<StudentListResponse>;
+	return result as Array<GetStudentListResponse>;
 };
 
 export const GetStudent = async (id: String): Promise<GetStudentResponse> => {
